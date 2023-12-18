@@ -22,6 +22,7 @@ function MainContent() {
     dimensions: { width: 0, length: 0 },
   });
   const [selectedCardName, setSelectedCardName] = useState(null);
+  const [restrictedUsers, setRestrictedUsers] = useState([]); // Burada tanımlandı
 
   const handleSearch = () => {
     const result = users.find(
@@ -36,8 +37,6 @@ function MainContent() {
       console.log('User not found');
     }
   };
-
- 
 
   const handleNewFacilityChange = (e) => {
     const { name, value } = e.target;
@@ -69,6 +68,16 @@ function MainContent() {
   // Fonksiyon, FacilityCard bileşeninden gelen tıklama olayına yanıt olarak çağrılır
   const handleCardClick = (cardName) => {
     setSelectedCardName(cardName);
+  };
+  const showRestrictedUsersList = () => {
+    const restrictedUsers = users.filter((user) => user.restricted);
+  
+    if (restrictedUsers.length > 0) {
+      console.log('Restricted Users:', restrictedUsers);
+      setRestrictedUsers(restrictedUsers);
+    } else {
+      console.log('No restricted users found.');
+    }
   };
 
   return (
@@ -159,6 +168,20 @@ function MainContent() {
           <p>Selected Card Name: {selectedCardName}</p>
         </div>
       )}
+
+      {/* Show Restricted Users Butonu */}
+      <button onClick={showRestrictedUsersList}>Show Restricted Users</button>
+
+      {/* Restricted Users Kartları */}
+      {restrictedUsers.length > 0 && (
+        <div className="restricted-users-list">
+          <h3>Restricted Users:</h3>
+          {restrictedUsers.map((restrictedUser, index) => (
+            <UserCard key={index} user={restrictedUser} />
+          ))}
+        </div>
+      )}
+
 
       {/* Takvim */}
       <Calendar></Calendar>
