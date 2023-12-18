@@ -7,6 +7,8 @@ import Calendar from './Calendar'; // Yeni eklenen bileşen
 import './MainContent.css';
 import users from '../data/users'; 
 import UserCard from './UserCard'; // UserCard bileşenini ekleyin
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
+import NavigationBar from './NavigationBar'; // Yeni eklenen bileşen
 
 
 function MainContent() {
@@ -81,111 +83,128 @@ function MainContent() {
   };
 
   return (
-    <main>
-      <h2>Welcome to the Admin Panel!</h2>
+    
+      <Router>
+        <div> 
+        <NavigationBar />
+        <main> 
+        <Routes>
+        {/* /restricted-user Route */}
+        <Route path="/restricted-user" element={
+          <React.Fragment>
+            {/* Kullanıcı Arama */}
+            <div className="search-container">
+              <input
+                type="text"
+                placeholder="Enter a name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button onClick={handleSearch}>Search</button>
+            </div>
 
-      {/* Kullanıcı Arama */}
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Enter a name..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button onClick={handleSearch}>Search</button>
-      </div>
+            {searchResult && (
+              <div className="search-result">
+                <h3>Search Result:</h3>
+                <UserCard user={searchResult} />
+              </div>
+            )}
 
-      {searchResult && (
-    <div className="search-result">
-      <h3>Search Result:</h3>
-      <UserCard user={searchResult} />
-    </div>
-  )}
+            {/* Show Restricted Users Butonu */}
+            <button onClick={showRestrictedUsersList}>Show Restricted Users</button>
 
-      {/* Tesis Kartları */}
-      <h3>Facilities:</h3>
-      <div className="facility-list">
-        {facilitiesData.map((facility, index) => (
-          <FacilityCard
-            key={index}
-            facility={facility}
-            onCardClick={handleCardClick}
-          />
-        ))}
-      </div>
+            {/* Restricted Users Kartları */}
+            {restrictedUsers.length > 0 && (
+              <div className="restricted-users-list">
+                <h3>Restricted Users:</h3>
+                {restrictedUsers.map((restrictedUser, index) => (
+                  <UserCard key={index} user={restrictedUser} />
+                ))}
+              </div>
+            )}
+          </React.Fragment>
+        } />
 
-      {/* Yeni Tesisi Ekleme Butonu */}
-      <button onClick={() => setNewFacilityModal(true)}>Add New Facility</button>
+        {/* /homepage Route */}
+        <Route path="/" element={
+          <div>
+            <h2>Welcome to the Admin Panel!</h2>
 
-      {/* Yeni Tesisi Ekleme Formu */}
-      {newFacilityModal && (
-        <div className="modal">
-          <h3>Add New Facility</h3>
-          <form>
-            <label>Name:</label>
-            <input
-              type="text"
-              name="name"
-              value={newFacilityData.name}
-              onChange={handleNewFacilityChange}
-            />
-            <label>Type:</label>
-            <select
-              name="type"
-              value={newFacilityData.type}
-              onChange={handleNewFacilityChange}
-            >
-              <option value="Spor Tesisi">Spor Tesisi</option>
-              {/* Diğer tip seçeneklerini ekleyebilirsiniz */}
-            </select>
-            <label>Capacity:</label>
-            <input
-              type="number"
-              name="capacity"
-              value={newFacilityData.capacity}
-              onChange={handleNewFacilityChange}
-            />
-            <label>Available Spots:</label>
-            <input
-              type="number"
-              name="available_spots"
-              value={newFacilityData.available_spots}
-              onChange={handleNewFacilityChange}
-            />
-            <button type="button" onClick={handleNewFacilitySave}>
-              Save
-            </button>
-            <button type="button" onClick={handleNewFacilityCancel}>
-              Cancel
-            </button>
-          </form>
-        </div>
-      )}
+            {/* Tesis Kartları */}
+            <h3>Facilities:</h3>
+            <div className="facility-list">
+              {facilitiesData.map((facility, index) => (
+                <FacilityCard
+                  key={index}
+                  facility={facility}
+                  onCardClick={handleCardClick}
+                />
+              ))}
+            </div>
 
-      {/* Seçilen Kartın Adını Gösterme */}
-      {selectedCardName && (
-        <div className="selected-card-info">
-          <p>Selected Card Name: {selectedCardName}</p>
-        </div>
-      )}
+            {/* Yeni Tesisi Ekleme Butonu */}
+            <button onClick={() => setNewFacilityModal(true)}>Add New Facility</button>
 
-      {/* Show Restricted Users Butonu */}
-      <button onClick={showRestrictedUsersList}>Show Restricted Users</button>
+            {/* Yeni Tesisi Ekleme Formu */}
+            {newFacilityModal && (
+              <div className="modal">
+                <h3>Add New Facility</h3>
+                <form>
+                  <label>Name:</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={newFacilityData.name}
+                    onChange={handleNewFacilityChange}
+                  />
+                  <label>Type:</label>
+                  <select
+                    name="type"
+                    value={newFacilityData.type}
+                    onChange={handleNewFacilityChange}
+                  >
+                    <option value="Spor Tesisi">Spor Tesisi</option>
+                    {/* Diğer tip seçeneklerini ekleyebilirsiniz */}
+                  </select>
+                  <label>Capacity:</label>
+                  <input
+                    type="number"
+                    name="capacity"
+                    value={newFacilityData.capacity}
+                    onChange={handleNewFacilityChange}
+                  />
+                  <label>Available Spots:</label>
+                  <input
+                    type="number"
+                    name="available_spots"
+                    value={newFacilityData.available_spots}
+                    onChange={handleNewFacilityChange}
+                  />
+                  <button type="button" onClick={handleNewFacilitySave}>
+                    Save
+                  </button>
+                  <button type="button" onClick={handleNewFacilityCancel}>
+                    Cancel
+                  </button>
+                </form>
+              </div>
+            )}
 
-      {/* Restricted Users Kartları */}
-      {restrictedUsers.length > 0 && (
-        <div className="restricted-users-list">
-          <h3>Restricted Users:</h3>
-          {restrictedUsers.map((restrictedUser, index) => (
-            <UserCard key={index} user={restrictedUser} />
-          ))}
-        </div>
-      )}
+            {/* Seçilen Kartın Adını Gösterme */}
+            {selectedCardName && (
+              <div className="selected-card-info">
+                <p>Selected Card Name: {selectedCardName}</p>
+              </div>
+            )}
 
-
-      {/* Takvim */}
-      <Calendar></Calendar>
-    </main>
+            {/* Takvim */}
+            <Calendar />
+          </div>
+        } />
+                </Routes>
+         </main>
+         </div>
+      </Router>
   );
 }
 
