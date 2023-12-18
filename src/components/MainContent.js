@@ -10,7 +10,6 @@ import UserCard from './UserCard'; // UserCard bileşenini ekleyin
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import NavigationBar from './NavigationBar'; // Yeni eklenen bileşen
 
-
 function MainContent() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResult, setSearchResult] = useState(null);
@@ -89,7 +88,7 @@ function MainContent() {
         <NavigationBar />
         <main> 
         <Routes>
-        {/* /restricted-user Route */}
+        {/* /restricted-user Route */}            
         <Route path="/restricted-user" element={
           <React.Fragment>
             {/* Kullanıcı Arama */}
