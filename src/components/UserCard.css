@@ -1,0 +1,24 @@
+/* src/components/UserCard.css */
+
+.user-card {
+    border: 2px solid #333;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+    background-color: #f0f0f0;
+  }
+  
+  .user-id {
+    background-color: #3498db; /* Mavi */
+    color: #fff; /* Beyaz */
+    font-weight: bold;
+    padding: 5px; /* Arka plan ve metin arasındaki boşluk */
+  }
+  
+  .user-info {
+    background-color: #ffb6c1; /* Açık Pembe */
+    padding: 5px;
+    margin-top: 5px; /* Bilgiler arasındaki boşluk */
+  }
+  

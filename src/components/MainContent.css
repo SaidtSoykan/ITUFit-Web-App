@@ -1,0 +1,67 @@
+/* src/components/MainContent.css */
+
+.facility-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.facility-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.facility-card strong {
+  display: block;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.facility-card .title {
+  background-color: #f1c40f; /* Sarı arka plan rengi */
+  color: #fff;
+  padding: 8px;
+  border-radius: 8px 8px 0 0;
+}
+
+.facility-card .details {
+  background-color: #2ecc71; /* Yeşil arka plan rengi */
+  color: #fff;
+  padding: 8px;
+  border-radius: 0 0 8px 8px;
+}
+
+.facility-card .fill-bar-container {
+  position: relative;
+  height: 10px;
+  overflow: hidden;
+}
+
+.facility-card .fill-bar {
+  position: relative;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.facility-card .bar-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #000; /* Siyah çizgi rengi */
+}
+
+
+/* src/components/MainContent.css */
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-result {
+  margin-top: 20px;
+}
