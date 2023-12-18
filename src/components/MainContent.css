@@ -65,3 +65,63 @@
 .search-result {
   margin-top: 20px;
 }
+
+
+/* src/components/MainContent.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* NavigationBar Stili */
+.navbar {
+  background-color: #333;
+  color: white;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  height: 60px;
+}
+
+.navbar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.navbar-item {
+  margin: 0;
+  padding: 0 10px;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar-link:hover {
+  color: #ffd700;
+}
+
+/* Ana İçerik (main) Stili */
+main {
+  margin-top: 60px; /* NavigationBar yüksekliği kadar margin ekleyerek içeriği aşağı kaydırın */
+  padding: 20px;
+}
+
+/* Diğer stilleri buraya ekleyebilirsiniz */
