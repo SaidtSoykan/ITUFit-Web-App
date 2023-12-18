@@ -1,0 +1,34 @@
+/* src/components/TimeSlots.css */
+
+/* Ana kart */
+.time-slots-card {
+  background-color: #ffd700; /* Sarı renk */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+/* Zaman yuvası kartları */
+.time-slot-card {
+  background-color: #add8e6; /* Mavi renk */
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  color: #fff; /* Beyaz renk yazılar için */
+  margin-bottom: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  /* Zaman yuvası kartı üzerine gelindiğinde */
+  &:hover {
+    background-color: #87ceeb; /* Açık mavi renk */
+  }
+
+  /* Rezerve edilmiş zaman yuvası */
+  &.reserved {
+    background-color: #ff6961; /* Kırmızı renk */
+    color: #fff; /* Beyaz renk yazılar için */
+    cursor: not-allowed;
+  }
+}
