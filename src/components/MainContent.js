@@ -93,6 +93,8 @@ function MainContent() {
           <React.Fragment>
             {/* Kullanıcı Arama */}
             <div className="search-container">
+              <h2>Please enter student name for arrange restriction state!</h2>
+              <br/>
               <input
                 type="text"
                 placeholder="Enter a name..."
