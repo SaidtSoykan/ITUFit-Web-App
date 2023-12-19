@@ -4,6 +4,12 @@
 
 .container {
   display: flex;
+  justify-content: center;
+  /* Yatay hizalama */
+  /* align-items: center;*/
+  /* Dikey hizalama */
+  height: 100vh;
+  /* Sayfanın tam boyunu kullanmak için */
 }
 
 header {

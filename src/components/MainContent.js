@@ -84,8 +84,8 @@ function MainContent() {
   return (
     
       <Router>
-        <div> 
         <NavigationBar />
+        <div> 
         <main> 
         <Routes>
         {/* /restricted-user Route */}            
