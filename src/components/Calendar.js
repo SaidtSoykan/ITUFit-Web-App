@@ -24,7 +24,7 @@ const Calendar = () => {
     const daysArray = [];
 
     // Add previous month's days
-    for (let i = lastDayOfPrevMonth - startingDay + 1; i <= lastDayOfPrevMonth; i++) {
+    for (let i = lastDayOfPrevMonth - startingDay + 2; i <= lastDayOfPrevMonth; i++) {
       daysArray.push(i);
     }
 
