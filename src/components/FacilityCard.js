@@ -5,10 +5,12 @@ import React, { useState } from 'react';
 const FacilityCard = ({ facility, onCardClick }) => {
   const { name, type, capacity, available_spots } = facility;
   const [isClicked, setIsClicked] = useState(false);
+  const [buttonText, setButtonText] = useState('Select');
 
   const handleButtonClick = () => {
     setIsClicked(true);
     onCardClick(name); // Seçili kartın adını iletmek için callback'i çağır
+    setButtonText(isClicked ? 'Select' : 'Deselect');
   };
 
   // Doluluk oranını hesapla
@@ -35,7 +37,7 @@ const FacilityCard = ({ facility, onCardClick }) => {
           <div className="fill-bar" style={{ width: `${fillRatio * 100}%`, backgroundColor: fillColor }}></div>
           <div className="bar-border"></div>
         </div>
-        <button onClick={handleButtonClick}>Select</button>
+        <button onClick={handleButtonClick}>{buttonText}</button>
       </div>
     </div>
   );

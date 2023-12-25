@@ -69,8 +69,12 @@ function MainContent() {
 
   // Fonksiyon, FacilityCard bileşeninden gelen tıklama olayına yanıt olarak çağrılır
   const handleCardClick = (cardName) => {
-    setSelectedCardName(cardName);
-    setShowCalendar(true);
+    if(!showCalendar){
+      setSelectedCardName(cardName);
+    }else{
+      setSelectedCardName(null); 
+    }
+    setShowCalendar(!showCalendar);
   };
   const showRestrictedUsersList = () => {
     const restrictedUsers = users.filter((user) => user.restricted);
