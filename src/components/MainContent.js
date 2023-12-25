@@ -146,7 +146,7 @@ function MainContent() {
             </div>
 
             {/* Yeni Tesisi Ekleme Butonu */}
-            <button onClick={() => setNewFacilityModal(true)}>Add New Facility</button>
+            <button onClick={() => setNewFacilityModal(!newFacilityModal)}>{newFacilityModal ? 'Return' : 'Add New Facility'}</button>
 
             {/* Yeni Tesisi Ekleme Formu */}
             {newFacilityModal && (

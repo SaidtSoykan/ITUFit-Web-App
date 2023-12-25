@@ -35,7 +35,7 @@ const FacilityCard = ({ facility, onCardClick }) => {
           <div className="fill-bar" style={{ width: `${fillRatio * 100}%`, backgroundColor: fillColor }}></div>
           <div className="bar-border"></div>
         </div>
-        <button onClick={handleButtonClick}>Click Me</button>
+        <button onClick={handleButtonClick}>Select</button>
       </div>
     </div>
   );
