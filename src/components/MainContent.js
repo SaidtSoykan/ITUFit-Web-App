@@ -24,6 +24,7 @@ function MainContent() {
   });
   const [selectedCardName, setSelectedCardName] = useState(null);
   const [restrictedUsers, setRestrictedUsers] = useState([]); // Burada tanımlandı
+  const [showCalendar, setShowCalendar] = useState(false);
 
   const handleSearch = () => {
     const result = users.find(
@@ -69,6 +70,7 @@ function MainContent() {
   // Fonksiyon, FacilityCard bileşeninden gelen tıklama olayına yanıt olarak çağrılır
   const handleCardClick = (cardName) => {
     setSelectedCardName(cardName);
+    setShowCalendar(true);
   };
   const showRestrictedUsersList = () => {
     const restrictedUsers = users.filter((user) => user.restricted);
@@ -199,7 +201,7 @@ function MainContent() {
             )}
 
             {/* Takvim */}
-            <Calendar />
+            {showCalendar && <Calendar />}
           </div>
         } />
                 </Routes>
