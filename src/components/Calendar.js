@@ -69,7 +69,7 @@ const Calendar = () => {
   };
 
   const handleShowTimeSlots = () => {
-    setShowTimeSlots(true);
+    setShowTimeSlots(!showTimeSlots);
   };
 
 
