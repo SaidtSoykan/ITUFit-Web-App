@@ -25,6 +25,9 @@ function MainContent() {
   const [selectedCardName, setSelectedCardName] = useState(null);
   const [restrictedUsers, setRestrictedUsers] = useState([]); // Burada tanımlandı
   const [showCalendar, setShowCalendar] = useState(false);
+  const [showAllFacilities, setShowAllFacilities] = useState(false);
+  const [selectedFacility, setSelectedFacility] = useState(null);
+  const [searchFacilityTerm, setSearchFacilityTerm] = useState('');
 
   const handleSearch = () => {
     const result = users.find(
@@ -37,6 +40,19 @@ function MainContent() {
     } else {
       setSearchResult(null);
       console.log('User not found');
+    }
+  };
+
+  const handleSearchFacility = () => {
+    const foundFacility = facilitiesData.find(
+      (facility) => facility.name.toLowerCase() === searchFacilityTerm.toLowerCase()
+    );
+
+    if (foundFacility) {
+      setSelectedFacility(foundFacility);
+    } else {
+      setSelectedFacility(null);
+      console.log('Facility not found');
     }
   };
 
@@ -110,6 +126,8 @@ function MainContent() {
               <button onClick={handleSearch}>Search</button>
             </div>
 
+
+
             {searchResult && (
               <div className="search-result">
                 <h3>Search Result:</h3>
@@ -137,17 +155,47 @@ function MainContent() {
           <div>
             <h2>Welcome to the Admin Panel!</h2>
 
+            {/* Search Facility Butonu ve Giriş Alanı */}
+            <div className="search-container">
+                  <input
+                    type="text"
+                    placeholder="Enter facility name..."
+                    value={searchFacilityTerm}
+                    onChange={(e) => setSearchFacilityTerm(e.target.value)}
+                  />
+                  <button onClick={handleSearchFacility}>Search Facility</button>
+                </div>
+
+                {/* Seçilen Tesis Kartı */}
+                {selectedFacility && (
+                  <div className="selected-facility-info">
+                    <h3>Selected Facility:</h3>
+                    <FacilityCard 
+                          facility={selectedFacility}
+                          onCardClick={handleCardClick}/>
+                  </div>
+                )}
+
+            {/* Show All Facilities Butonu */}
+            <button onClick={() => setShowAllFacilities(!showAllFacilities)}>
+                  {showAllFacilities ? 'Hide Facilities' : 'Show All Facilities'}
+                </button>
+
             {/* Tesis Kartları */}
-            <h3>Facilities:</h3>
-            <div className="facility-list">
-              {facilitiesData.map((facility, index) => (
-                <FacilityCard
-                  key={index}
-                  facility={facility}
-                  onCardClick={handleCardClick}
-                />
-              ))}
-            </div>
+            {showAllFacilities && (
+                  <>
+                    <h3>Facilities:</h3>
+                    <div className="facility-list">
+                      {facilitiesData.map((facility, index) => (
+                        <FacilityCard
+                          key={index}
+                          facility={facility}
+                          onCardClick={handleCardClick}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
 
             {/* Yeni Tesisi Ekleme Butonu */}
             <button onClick={() => setNewFacilityModal(!newFacilityModal)}>{newFacilityModal ? 'Return' : 'Add New Facility'}</button>
