@@ -1,6 +1,6 @@
 // src/components/MainContent.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import initialFacilitiesData from '../data/facilities';
 import FacilityCard from './FacilityCard';
 import Calendar from './Calendar'; // Yeni eklenen bileşen
@@ -9,26 +9,49 @@ import users from '../data/users';
 import UserCard from './UserCard'; // UserCard bileşenini ekleyin
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import NavigationBar from './NavigationBar'; // Yeni eklenen bileşen
+import axios from 'axios';
 
 function MainContent() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResult, setSearchResult] = useState(null);
   const [newFacilityModal, setNewFacilityModal] = useState(false);
   const [facilitiesData, setFacilitiesData] = useState(initialFacilitiesData);
-  const [newFacilityData, setNewFacilityData] = useState({
-    name: '',
-    type: '',
-    capacity: 0,
-    available_spots: 0,
-    dimensions: { width: 0, length: 0 },
-  });
+  // const [newFacilityData, setNewFacilityData] = useState({
+  //   type: '',
+  //   capacity: '',
+  //   description: '',
+  // });
+  const [newFacilityType, setNewFacilityType] = useState(null);
+  const [newFacilityCapacity, setNewFacilityCapacity] = useState(null);
+  const [newFacilityDescription, setNewFacilityDescription] = useState(null);
+
+
+
   const [selectedCardName, setSelectedCardName] = useState(null);
   const [restrictedUsers, setRestrictedUsers] = useState([]); // Burada tanımlandı
   const [showCalendar, setShowCalendar] = useState(false);
   const [showAllFacilities, setShowAllFacilities] = useState(false);
   const [selectedFacility, setSelectedFacility] = useState(null);
   const [searchFacilityTerm, setSearchFacilityTerm] = useState('');
-
+  
+  useEffect(() => {
+  
+    fetchFacilitiesData();
+  }, []);
+   
+  const fetchFacilitiesData = async () => {
+    try {
+      const response = await axios.post('https://c4f3-176-42-133-250.ngrok-free.app/facilities/listFacility');
+      setFacilitiesData(response.data.data); // Assuming the response contains an arr of facilities
+      
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching facilities:', error);
+    }
+  };
+   
+  
+  
   const handleSearch = () => {
     const result = users.find(
       (user) => user.name.toLowerCase() === searchTerm.toLowerCase()
@@ -43,45 +66,73 @@ function MainContent() {
     }
   };
 
-  const handleSearchFacility = () => {
-    const foundFacility = facilitiesData.find(
-      (facility) => facility.name.toLowerCase() === searchFacilityTerm.toLowerCase()
-    );
-
-    if (foundFacility) {
-      setSelectedFacility(foundFacility);
-    } else {
-      setSelectedFacility(null);
-      console.log('Facility not found');
+  const handleSearchFacility = async () => {
+    try {
+      const requestData = {
+        facilityType: searchFacilityTerm
+      }
+      const response = await axios.post('https://c4f3-176-42-133-250.ngrok-free.app/facilities/searchFacility', requestData);
+      const foundFacility = response.data.data;
+      if (foundFacility) {
+        setSelectedFacility(foundFacility);
+      } else {
+        setSelectedFacility(null);
+        console.log('Facility not found');
+      }
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error searching facilities:', error);
     }
+
+    // const foundFacility = facilitiesData.find(
+    //   (facility) => facility.name.toLowerCase() === searchFacilityTerm.toLowerCase()
+    // );
+
+    
   };
 
-  const handleNewFacilityChange = (e) => {
-    const { name, value } = e.target;
-    setNewFacilityData((prevData) => ({ ...prevData, [name]: value }));
+  const handleNewFacilityChange = async () => {
+    try {
+      const requestData = {
+        facilityType: newFacilityType,
+        capacity: newFacilityCapacity,
+        description: newFacilityDescription,
+        location: "ITU",
+      }
+      console.log(requestData);
+      const response = await axios.post('https://c4f3-176-42-133-250.ngrok-free.app/facilities/addFacility', requestData);
+      if(response.data){
+        console.log("Facility added");
+        fetchFacilitiesData();
+      }else{
+        console.log("Facility cant added");
+      }
+    } catch (error) {
+      console.error('Connection error:', error);
+    }
   };
 
   const handleNewFacilityCancel = () => {
     setNewFacilityModal(false);
   };
 
-  const handleNewFacilitySave = () => {
-    console.log('New Facility Data:', newFacilityData);
+  // const handleNewFacilitySave = () => {
+  //   console.log('New Facility Data:', newFacilityData);
 
-    // Update facilitiesData with the new facility
-    setFacilitiesData((prevData) => [...prevData, newFacilityData]);
+  //   // Update facilitiesData with the new facility
+  //   setFacilitiesData((prevData) => [...prevData, newFacilityData]);
 
-    // Reset the form data and close the modal
-    setNewFacilityData({
-      name: '',
-      type: 'Spor Tesisi',
-      capacity: 0,
-      available_spots: 0,
-      dimensions: { width: 0, length: 0 },
-    });
+  //   // Reset the form data and close the modal
+  //   setNewFacilityData({
+  //     name: '',
+  //     type: 'Spor Tesisi',
+  //     capacity: 0,
+  //     available_spots: 0,
+  //     dimensions: { width: 0, length: 0 },
+  //   });
 
-    setNewFacilityModal(false);
-  };
+  //   setNewFacilityModal(false);
+  // };
 
   // Fonksiyon, FacilityCard bileşeninden gelen tıklama olayına yanıt olarak çağrılır
   const handleCardClick = (cardName) => {
@@ -177,9 +228,13 @@ function MainContent() {
                 )}
 
             {/* Show All Facilities Butonu */}
-            <button onClick={() => setShowAllFacilities(!showAllFacilities)}>
-                  {showAllFacilities ? 'Hide Facilities' : 'Show All Facilities'}
-                </button>
+            <button onClick={() => {
+                setShowAllFacilities(!showAllFacilities);
+                fetchFacilitiesData();
+              }}>
+            {showAllFacilities ? 'Hide Facilities' : 'Show All Facilities'}
+            </button>
+
 
             {/* Tesis Kartları */}
             {showAllFacilities && (
@@ -205,37 +260,43 @@ function MainContent() {
               <div className="modal">
                 <h3>Add New Facility</h3>
                 <form>
-                  <label>Name:</label>
+                  {/* <label>Name:</label>
                   <input
                     type="text"
                     name="name"
                     value={newFacilityData.name}
                     onChange={handleNewFacilityChange}
-                  />
+                  /> */}
                   <label>Type:</label>
                   <select
                     name="type"
-                    value={newFacilityData.type}
-                    onChange={handleNewFacilityChange}
+                    // value={newFacilityData.type}
+                    onChange={(e) => setNewFacilityType(e.target.value)}
                   >
-                    <option value="Spor Tesisi">Spor Tesisi</option>
+                    <option value="GYM">GYM</option>
+                    <option value="POOL">POOL</option>
+                    <option value="TENNIS_COURT">TENNIS COURT</option>
+                    <option value="TABLE_TENNIS">TABLE TENNIS</option>
+                    <option value="BASKETBALL">BASKETBALL</option>
+                    <option value="FOOTBALL">FOOTBALL</option>
+                    <option value="VOLLEYBALL">VOLLEYBALL</option>
                     {/* Diğer tip seçeneklerini ekleyebilirsiniz */}
                   </select>
                   <label>Capacity:</label>
                   <input
-                    type="number"
+                    type="text"
                     name="capacity"
-                    value={newFacilityData.capacity}
-                    onChange={handleNewFacilityChange}
+                    // value={newFacilityData.capacity}
+                    onChange={(e) => setNewFacilityCapacity(e.target.value)}
                   />
-                  <label>Available Spots:</label>
+                  <label>Description:</label>
                   <input
-                    type="number"
-                    name="available_spots"
-                    value={newFacilityData.available_spots}
-                    onChange={handleNewFacilityChange}
+                    type="text"
+                    name="description"
+                    // value={newFacilityData.description}
+                    onChange={(e) => setNewFacilityDescription(e.target.value)}
                   />
-                  <button type="button" onClick={handleNewFacilitySave}>
+                  <button type="button" onClick={handleNewFacilityChange}>
                     Save
                   </button>
                   <button type="button" onClick={handleNewFacilityCancel}>

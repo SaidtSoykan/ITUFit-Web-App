@@ -1,19 +1,35 @@
 // src/components/Login.js
 import React, { useState } from 'react';
 import  './Login.css'; 
+import axios from 'axios';
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = () => {
-    // Burada gerçek bir kimlik doğrulama yapılmalıdır.
-    // Örnek olarak, hardcoded bir kullanıcı adı ve şifre kontrolü yapalım.
-    if (username === 'admin' && password === 'admin123') {
-      onLogin(); // Giriş başarılıysa onLogin callback'ini çağır
-    } else {
-      setError('Invalid username or password');
+  const handleLogin = async () => {
+    try {
+      const requestData = {
+        email: username,
+        password: password,
+      };
+
+      // Backend'e giriş isteği gönderilir
+      const response = await axios.post('https://c4f3-176-42-133-250.ngrok-free.app/students/login', requestData);
+
+      if (response.data.success) {
+        // Giriş başarılıysa, kullanıcı bilgilerini saklayabilirsiniz (isteğe bağlı)
+        // const { jwtToken, userId } = response.data.data;
+        // await AsyncStorage.setItem('userId', userId.toString());
+
+        onLogin();
+      } else {
+        // Backend authentication failed
+        setError('Invalid username or password');
+      }
+    } catch (error) {
+      setError('Connection error');
     }
   };
 
