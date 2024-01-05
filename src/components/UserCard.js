@@ -12,18 +12,14 @@ const UserCard = ({ user }) => {
 
     try {
       const response = await axios.post('http://13.50.243.223:8080/students/restrict', requestData);
-
       if (response.data) {
         console.log("Kullanıcının yasak durumu değiştirildi.");
       } else {
         console.log("Bir hata oldu.");
       }
-
     } catch (error) {
       console.error('Error restricting user:', error);
     }
-
-    // Eğer allow butonuna basılırsa restricted değerini tersine çevir
     setIsRestricted(!isRestricted);
   };
 

@@ -20,7 +20,7 @@ body {
   align-items: center;
   padding: 0 20px;
   box-sizing: border-box;
-  height: 60px; /* Sabit bir yükseklik ekleyin */
+  height: 60px;
 }
 
 .navbar-list {
@@ -47,9 +47,8 @@ body {
   color: #ffd700;
 }
 
-/* İçerik (Content) Stili */
 .content {
-  margin-top: 60px; /* Menü yüksekliği kadar margin ekleyerek içeriği aşağı kaydırın */
+  margin-top: 60px;
   padding: 20px;
   background-color: #f0f0f0;
 }

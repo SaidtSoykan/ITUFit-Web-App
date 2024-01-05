@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './NavigationBar.css'; // Stil dosyasını ekleyin
+import './NavigationBar.css';
 
 function NavigationBar() {
   const handleLogout = () => {
-    // Implement your logout logic here
-    // For example, you can clear user authentication state or token
     console.log("Logout clicked");
   };
 

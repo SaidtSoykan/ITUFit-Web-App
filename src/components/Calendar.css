@@ -40,7 +40,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 5px;
-    background-color: rgb(191, 255, 0); /* Arka planı yeşil yapar */
+    background-color: rgb(191, 255, 0);
     
   }
   
@@ -49,7 +49,7 @@
     padding: 10px;
     border: 1px solid #00f;
     position: relative;
-    background-color: #fff; /* Günlerin arka planını beyaz yapar */
+    background-color: #fff;
 
   }
   
@@ -59,14 +59,13 @@
     border-radius: 50%;
   }
   
-
-  .month,
+.month,
 .month ul,
 .month li,
 .weekdays,
 .weekdays li,
 .days,
 .days li {
-  border: 1px solid #00f; /* Kenarları mavi yapar */
+  border: 1px solid #00f;
 }
 

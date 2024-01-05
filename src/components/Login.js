@@ -15,17 +15,11 @@ const Login = ({ onLogin }) => {
         password: password,
       };
 
-      // Backend'e giriş isteği gönderilir
       const response = await axios.post('http://13.50.243.223:8080/students/login', requestData);
 
       if (response.data.success) {
-        // Giriş başarılıysa, kullanıcı bilgilerini saklayabilirsiniz (isteğe bağlı)
-        // const { jwtToken, userId } = response.data.data;
-        // await AsyncStorage.setItem('userId', userId.toString());
-
         onLogin();
       } else {
-        // Backend authentication failed
         setError('Invalid username or password');
       }
     } catch (error) {

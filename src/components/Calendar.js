@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Calendar.css';
-import Agenda from './Agenda'; // TimeSlots bileşenini ekleyin
+import Agenda from './Agenda';
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState('');
@@ -8,31 +8,23 @@ const Calendar = () => {
   const [selectedDay, setSelectedDay] = useState(null);
   const [originalColor, setOriginalColor] = useState(null);
   const [allowChangeColor, setAllowChangeColor] = useState(false);
-  const [showTimeSlots, setShowTimeSlots] = useState(false); // Yeni state
+  const [showTimeSlots, setShowTimeSlots] = useState(false);
 
   useEffect(() => {
     const currentDate = new Date();
     const currentMonth = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
     setCurrentMonth(currentMonth);
-
     const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
     const startingDay = firstDayOfMonth.getDay();
-
     const lastDayOfPrevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-
     const daysArray = [];
-
-    // Add previous month's days
     for (let i = lastDayOfPrevMonth - startingDay + 2; i <= lastDayOfPrevMonth; i++) {
       daysArray.push(i);
     }
-
-    // Add current month's days
     for (let i = 1; i <= daysInMonth; i++) {
       daysArray.push(i);
     }
-
     setDays(daysArray);
   }, []);
 
@@ -40,18 +32,14 @@ const Calendar = () => {
     console.log('Selected Day:', day);
     setSelectedDay(day);
     setAllowChangeColor(true);
-
     const dayElement = document.getElementById(`day-${day}`);
     if (dayElement) {
       setOriginalColor(dayElement.style.backgroundColor || '');
     }
   };
-
   const handleSlotClick = (day, timeSlot) => {
     console.log(`Selected Slot on ${day}: ${timeSlot}`);
-    // Burada seçilen zaman dilimine yönelik gerekli işlemleri yapabilirsiniz
   };
-
   const handleChangeBackgroundColor = () => {
     if (selectedDay !== null) {
       const dayElement = document.getElementById(`day-${selectedDay}`);
@@ -67,13 +55,9 @@ const Calendar = () => {
       }
     }
   };
-
   const handleShowTimeSlots = () => {
     setShowTimeSlots(!showTimeSlots);
   };
-
-
-
   return (
     <div className="calendar">
       <h2>{currentMonth}</h2>
@@ -86,7 +70,6 @@ const Calendar = () => {
         <div className="weekday">Sat</div>
         <div className="weekday">Sun</div>
       </div>
-
       <div className="days">
         {days.map((day, index) => (
           <div
@@ -103,11 +86,9 @@ const Calendar = () => {
       <button onClick={handleChangeBackgroundColor}>
         {allowChangeColor || originalColor === 'green' ? 'Restrict' : 'Allow'}
       </button>
-
       <button onClick={handleShowTimeSlots}>
         Show Time Slots
       </button>
-
       {showTimeSlots && <Agenda day={selectedDay} handleSlotClick={handleSlotClick} />}
     </div>
 

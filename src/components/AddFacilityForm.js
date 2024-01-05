@@ -32,7 +32,6 @@ const AddFacilityForm = ({ newFacilityData, onChange, onSave, onCancel }) => {
           onChange={handleInputChange}
         >
           <option value="Spor Tesisi">Spor Tesisi</option>
-          {/* Diğer tip seçeneklerini ekleyebilirsiniz */}
         </select>
         <label>Capacity:</label>
         <input

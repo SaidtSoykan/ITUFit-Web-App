@@ -1,9 +1,7 @@
-// src/components/TimeSlots.js
-
 import React, { useState } from 'react';
 import './Agenda.css';
 
-const TimeSlots = ({ day, handleSlotClick }) => {
+const TimeSlots = ({ day }) => {
   const generateTimeSlots = () => {
     const timeSlots = [];
     for (let i = 8; i <= 18; i += 2) {
