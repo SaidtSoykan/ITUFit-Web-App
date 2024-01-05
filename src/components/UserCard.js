@@ -11,7 +11,7 @@ const UserCard = ({ user }) => {
     };
 
     try {
-      const response = await axios.post('https://c4f3-176-42-133-250.ngrok-free.app/students/restrict', requestData);
+      const response = await axios.post('http://13.50.243.223:8080/students/restrict', requestData);
 
       if (response.data) {
         console.log("Kullanıcının yasak durumu değiştirildi.");

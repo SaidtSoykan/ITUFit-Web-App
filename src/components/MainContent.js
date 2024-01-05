@@ -41,7 +41,7 @@ function MainContent() {
    
   const fetchFacilitiesData = async () => {
     try {
-      const response = await axios.post('https://c4f3-176-42-133-250.ngrok-free.app/facilities/listFacility');
+      const response = await axios.post('http://13.50.243.223:8080/facilities/listFacility');
       setFacilitiesData(response.data.data); // Assuming the response contains an arr of facilities
       
       console.log(response.data);
@@ -59,7 +59,7 @@ function MainContent() {
       }
       console.log("searchTerm: ",searchTerm);
 
-      const response = await axios.post('https://c4f3-176-42-133-250.ngrok-free.app/students/search', requestData);
+      const response = await axios.post('http://13.50.243.223:8080/students/search', requestData);
       const foundUser = response.data.data;
       console.log("response.data: ",response.data);
       console.log("response.data.data: ",response.data.data);
@@ -81,7 +81,7 @@ function MainContent() {
       const requestData = {
         facilityType: searchFacilityTerm
       }
-      const response = await axios.post('https://c4f3-176-42-133-250.ngrok-free.app/facilities/searchFacility', requestData);
+      const response = await axios.post('http://13.50.243.223:8080/facilities/searchFacility', requestData);
       const foundFacility = response.data.data;
       if (foundFacility) {
         setSelectedFacility(foundFacility);
@@ -110,7 +110,7 @@ function MainContent() {
         location: "ITU",
       }
       console.log(requestData);
-      const response = await axios.post('https://c4f3-176-42-133-250.ngrok-free.app/facilities/addFacility', requestData);
+      const response = await axios.post('http://13.50.243.223:8080/facilities/addFacility', requestData);
       if(response.data){
         console.log("Facility added");
         fetchFacilitiesData();
@@ -156,7 +156,7 @@ function MainContent() {
 
   const showRestrictedUsersList = async () => {
     try {
-      const response = await axios.post('https://c4f3-176-42-133-250.ngrok-free.app/students/listRestricted');
+      const response = await axios.post('http://13.50.243.223:8080/students/listRestricted');
       console.log("response.data is :", response.data);
       const restrictedUsers = response.data.data;
       console.log("restrictedUsers is :", restrictedUsers);
