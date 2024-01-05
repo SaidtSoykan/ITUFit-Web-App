@@ -61,12 +61,13 @@ function MainContent() {
 
       const response = await axios.post('http://13.50.243.223:8080/students/search', requestData);
       const foundUser = response.data.data;
+      console.log('response: ', response);
       console.log("response.data: ",response.data);
       console.log("response.data.data: ",response.data.data);
       if (response.data) {
         setSearchResult(foundUser);
         console.log("foundUser: ", foundUser);
-      } else {
+      } else{
         setSearchResult(null);
         console.log('User not found');
       }
@@ -211,10 +212,13 @@ function MainContent() {
             {searchResult && (
               <div className="search-result">
                 <h3>Search Result:</h3>
-                <UserCard user={{
-                                id: searchResult.id,
-                                firstName:searchResult.firstName,
-                                lastName:searchResult.lastName}} />
+                    {searchResult.map((searchResult, index) => (
+                      <UserCard key={index} user={{
+                        id: searchResult.id,
+                        firstName: searchResult.firstName,
+                        lastName: searchResult.lastName
+                      }} />
+                    ))}
               </div>
             )}
 
