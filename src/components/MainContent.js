@@ -52,17 +52,27 @@ function MainContent() {
    
   
   
-  const handleSearch = () => {
-    const result = users.find(
-      (user) => user.name.toLowerCase() === searchTerm.toLowerCase()
-    );
+  const handleSearch = async () => {
+    try {
+      const requestData = {
+        name: searchTerm
+      }
+      console.log("searchTerm: ",searchTerm);
 
-    if (result) {
-      setSearchResult(result);
-      console.log('User Data:', result);
-    } else {
-      setSearchResult(null);
-      console.log('User not found');
+      const response = await axios.post('https://c4f3-176-42-133-250.ngrok-free.app/students/search', requestData);
+      const foundUser = response.data.data;
+      console.log("response.data: ",response.data);
+      console.log("response.data.data: ",response.data.data);
+      if (response.data) {
+        setSearchResult(foundUser);
+        console.log("foundUser: ", foundUser);
+      } else {
+        setSearchResult(null);
+        console.log('User not found');
+      }
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error searching users:', error);
     }
   };
 
@@ -143,16 +153,35 @@ function MainContent() {
     }
     setShowCalendar(!showCalendar);
   };
-  const showRestrictedUsersList = () => {
-    const restrictedUsers = users.filter((user) => user.restricted);
+
+  const showRestrictedUsersList = async () => {
+    try {
+      const response = await axios.post('https://c4f3-176-42-133-250.ngrok-free.app/students/listRestricted');
+      console.log("response.data is :", response.data);
+      const restrictedUsers = response.data.data;
+      console.log("restrictedUsers is :", restrictedUsers);
   
-    if (restrictedUsers.length > 0) {
-      console.log('Restricted Users:', restrictedUsers);
-      setRestrictedUsers(restrictedUsers);
-    } else {
-      console.log('No restricted users found.');
+      if (restrictedUsers.length > 0) {
+        console.log('Restricted Users:', restrictedUsers);
+        setRestrictedUsers(restrictedUsers);
+      } else {
+        console.log('No restricted users can be found.');
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error);
     }
   };
+
+  // const showRestrictedUsersList = () => {
+  //   const restrictedUsers = users.filter((user) => user.restricted);
+  
+  //   if (restrictedUsers.length > 0) {
+  //     console.log('Restricted Users:', restrictedUsers);
+  //     setRestrictedUsers(restrictedUsers);
+  //   } else {
+  //     console.log('No restricted users found.');
+  //   }
+  // };
 
   return (
     
@@ -182,7 +211,10 @@ function MainContent() {
             {searchResult && (
               <div className="search-result">
                 <h3>Search Result:</h3>
-                <UserCard user={searchResult} />
+                <UserCard user={{
+                                id: searchResult.id,
+                                firstName:searchResult.firstName,
+                                lastName:searchResult.lastName}} />
               </div>
             )}
 
@@ -194,7 +226,10 @@ function MainContent() {
               <div className="restricted-users-list">
                 <h3>Restricted Users:</h3>
                 {restrictedUsers.map((restrictedUser, index) => (
-                  <UserCard key={index} user={restrictedUser} />
+                  <UserCard key={index} user={{
+                                              id: restrictedUser.id,
+                                              firstName:restrictedUser.firstName,
+                                              lastName:restrictedUser.lastName}} />
                 ))}
               </div>
             )}
